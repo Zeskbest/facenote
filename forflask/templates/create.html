@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h1>
+{% if defaults %}
+Edit
+{%else%}
+Create
+{% endif %}
+account</h1>
+<form action="" method="post" enctype="multipart/form-data" name="create">
+	{{form.hidden_tag()}}
+	<p>
+	Enter the Name:<br>
+	{% if defaults %}
+	{{form.name(size=40,value=defaults[0])}}
+	{%else%}
+	{{form.name(size=40)}}
+	{% endif %}
+	<br></p>
+	<p>
+	Place 
+	{% if defaults %}
+	new
+	{%else%}
+	your
+	{% endif %}
+	photo:<br>
+	
+	{{form.image()}}
+	</p>
+	<p>
+	Enter Information:<br>
+	{% if defaults %}
+	{{form.info(value=defaults[1])}}
+	{%else%}
+	{{form.info()}}
+	{% endif %}
+	<br>
+	</p>
+	<p>
+	{% if defaults %}
+	<input type="submit" value="Confirm Hero">
+	{%else%}
+	<input type="submit" value="Add Hero">
+	{% endif %}
+	</p>
+
+</form>
+{% endblock %}

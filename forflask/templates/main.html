@@ -1,0 +1,72 @@
+<html>
+ <head>
+  <title>{% if title %}
+  {{ title }} - facenote
+  {% else %}
+  facenote
+  {% endif %}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxdn.bootstrapdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>The Facenote</title>
+  <style type="text/css">
+  html, body{height:100%;margin:0;padding:0}
+  </style>
+ </head>
+ <body style="font-family: sans-serif">
+	 <div class="container-fluid" style="height:100%">
+		<div class="row row-eq-height"style="height:100%">
+			<div class="col-md-4 col-xs-6" style="background:#545454;height:100%;padding-left:0px;padding-right:0px;">
+				<div align="center">
+					<div class="btn-group btn-group-justified"style="background-color:lightblue"> 
+						<div class="btn-group"> 
+							<a href="/create"><button type="button" class="btn btn-lg" style="background-color:lightblue" >
+							<span class="glyphicon glyphicon-plus"style="color:#545454"> </span>
+						</button></a>
+						</div>
+						<div class="btn-group"> 
+							<a 
+							{% if editing %}
+							href="/edit/{{ post_id }}"
+							{% endif %}><button type="button" class="btn
+							{% if not editing %}
+							disabled
+							{% endif %}	btn-lg" style="background-color:lightblue">
+							<span class="glyphicon glyphicon-pencil"style="color:#545454"> </span>
+						</button></a>
+						</div>
+						<div class="btn-group"> 
+								<form method="POST" style="margin-bottom:0px"><button type="{% if editing %}submit{% else %}button{% endif %}" name="submit" value="delete" class="btn 
+								{% if not editing %}
+								disabled
+								{% endif %} btn-lg" style="background-color:lightblue">
+							<span class="glyphicon glyphicon-trash"style="color:#545454"> </span> 
+						</button></form>
+						</div>
+					</div>
+				</div>
+				
+				
+				<ul class="nav nav-list">
+					<br>
+					{% for i in range(acc_list[0]-1) %}
+					{% if i+1 == post_id %}
+						<li><a style="background-color:#b8ecff;color:#888888;" href="/post/{{ i+1 }}" >{{ acc_list[i+2] }}</a></li>
+					{% else %} 
+						<li><a style="color:#888888;"href="/post/{{ i+1 }}">{{ acc_list[i+2] }}</a></li>
+					{% endif %}
+					{% endfor %}
+				</ul> 
+				
+				
+			</div> 
+			<div class="col-md-8 col-xs-12 col-sm-6" style="background:#b8ecff; padding-top:10px; height:100%">
+				{% block content %}
+				{% endblock %}
+			</div>
+		</div>
+	 </div>
+ </body>
+</html>

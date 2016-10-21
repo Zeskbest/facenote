@@ -1,0 +1,25 @@
+{% extends "main.html"%}
+{% block content%}
+<style>
+	table {
+		margin: auto;
+		}
+</style>
+
+<img style="height:40%" align="center" alt="image not found" src="{{ filename }}" class="img-responsive center-block" >
+<br>
+<table>
+{% for post in posts %}
+
+
+<tr align="center" >
+	<td class="text-right">
+		{{ post[0] }}
+	</td>
+	<td class="text-left" style="padding-left:8px">
+		{{ post[1] }}
+	</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
