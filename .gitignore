@@ -1,3 +1,4 @@
 flask/*
+.ssh/*
 forflask/static/databse/*
 virtualenv.py
