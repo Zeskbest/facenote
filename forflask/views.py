@@ -115,7 +115,7 @@ def make_create():
 	num=get_num()
 	if form.image.data:
 		image_name=secure_filename(form.image.data.filename)
-		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.',beg=-5):])
+		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.',-5):])
 	if form.is_submitted():
 		'''Data Saving'''
 		name = str(form.name)
@@ -142,7 +142,7 @@ def edit(post_id):
 	if form.image.data:
 		delete_image(num_from_post(post_id))
 		image_name=secure_filename(form.image.data.filename)
-		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.',beg=-5):])
+		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.',-5):])
 	if form.is_submitted():
 		'''Data Saving'''
 		name = str(form.name)
