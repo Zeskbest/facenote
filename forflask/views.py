@@ -115,7 +115,7 @@ def make_create():
 	num=get_num()
 	if form.image.data:
 		image_name=secure_filename(form.image.data.filename)
-		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.'):])
+		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.',beg=-5):])
 	if form.is_submitted():
 		'''Data Saving'''
 		name = str(form.name)
@@ -142,20 +142,19 @@ def edit(post_id):
 	if form.image.data:
 		delete_image(num_from_post(post_id))
 		image_name=secure_filename(form.image.data.filename)
-		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.'):])
+		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.',beg=-5):])
 	if form.is_submitted():
 		'''Data Saving'''
 		name = str(form.name)
 		info = str(form.info)
-		name=name[name.index('value="')+7:name.index('">')]
-		info=info[info.index('>')+1:info.index('</')]
+		name=name[name.index('value="')+7:name.index('">')].replace(";",",")
+		info=info[info.index('>')+1:info.index('</')].replace(";",",").replace('\n',' ')
 		 
 		if not post[1][1]==name or not post[3][1]==info:
 			delete_account(num)
 			f=open("forflask/static/database/names","a")
 			f.write(str(num)+";"+name+";"+post[2][1]+";"+info+'\n')
 			f.close()
-		'''return redirect('/accont/'+num)'''
 		return redirect('post/'+str(post_id))
 	return render_template('create.html',
 		title='Edit your hero!',
