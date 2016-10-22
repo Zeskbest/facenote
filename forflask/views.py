@@ -1,6 +1,6 @@
-from flask import render_template, request, jsonify, url_for, redirect
+from flask import render_template, request, url_for, redirect
 from forflask import app
-from os import path, listdir, remove
+from os import listdir, remove
 from datetime import datetime
 from forms import CreateForm, EditForm
 from werkzeug.utils import secure_filename
@@ -118,19 +118,16 @@ def make_create():
 		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.'):])
 	if form.is_submitted():
 		'''Data Saving'''
-		result = 'success'
 		name = str(form.name)
 		info = str(form.info)
-		name=name[name.index('value="')+7:name.index('">')]
-		info=info[info.index('>')+1:info.index('</')]
+		name=name[name.index('value="')+7:name.index('">')].replace(";",",")
+		info=info[info.index('>')+1:info.index('</')].replace(";",",").replace('\n',' ')
 		
 		f=open("forflask/static/database/names","a")
 		f.write(str(num)+";"+name+";"+str(datetime.now())[:-7].replace('-','.')+";"+info+'\n')
 		f.close()
-		'''return redirect('/accont/'+num)'''
+		
 		return redirect("/post/"+str(get_list()[0]-1))
-	else:
-		result = 'not submitted'
 	return render_template('create.html',
 		title='Create your character?',
 		form=form,
@@ -148,7 +145,6 @@ def edit(post_id):
 		form.image.data.save(UPLOAD_FOLDER+str(num)+image_name[image_name.index('.'):])
 	if form.is_submitted():
 		'''Data Saving'''
-		result = 'success'
 		name = str(form.name)
 		info = str(form.info)
 		name=name[name.index('value="')+7:name.index('">')]
@@ -161,8 +157,6 @@ def edit(post_id):
 			f.close()
 		'''return redirect('/accont/'+num)'''
 		return redirect('post/'+str(post_id))
-	else:
-		result = 'not submitted'
 	return render_template('create.html',
 		title='Edit your hero!',
 		form=form,
